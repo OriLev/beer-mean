@@ -5,7 +5,8 @@ var bodyParser = require('body-parser');
 
 mongoose.connect('mongodb://localhost/beers');
 
-var Beer = require("./BeerModel");
+var Beer = require("./models/BeerModel");
+var Review = require("./models/ReviewModel");
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.get('/beers', function (req, res) {
 
 app.post('/beers', function (req, res, next) {
   var beer = new Beer(req.body);
+ 
 
   beer.save(function(err, beer) {
   	if (err) { return next(err); }
@@ -37,6 +39,34 @@ app.post('/beers', function (req, res, next) {
 
   })
   
+});
+
+app.delete('/beers/:id', function (req, res, next) {
+  Beer.findById(req.params.id, function(err, beer) {
+  if (err) throw err;
+
+  // show the one person with ID 13
+  beer.remove(function(err) {
+    if (err) throw err;
+
+    res.send('Beer successfully deleted!');
+  });
+});
+
+ 
+});
+
+app.post("/beers/:id/review", function(req, res, next){
+ var newRev = new Review(req.body);
+ console.log(newRev);
+
+ Beer.findById(req.params.id, function(err, beer){
+   beer.reviews.push(newRev);
+   beer.save(function(err, revisedBeer){
+     if (err) {return next(err);}
+     res.json(newRev);
+   });
+   });
 });
 
 
