@@ -2,7 +2,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
-
+console.log(process.env.MONGOLAB_NAVI_URI );
 mongoose.connect(process.env.MONGOLAB_NAVI_URI ||'mongodb://localhost/beers');
 
 var Beer = require("./models/BeerModel");
