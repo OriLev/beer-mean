@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
 
-mongoose.connect('mongodb://localhost/beers');
+mongoose.connect(process.env.MONGOLAB_NAVI_URI ||'mongodb://localhost/beers');
 
 var Beer = require("./models/BeerModel");
 var Review = require("./models/ReviewModel");
@@ -71,4 +71,4 @@ app.post("/beers/:id/review", function(req, res, next){
 
 
 
-app.listen(8000);
+app.listen(process.env.PORT || '4000');
