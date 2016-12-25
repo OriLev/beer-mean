@@ -19,7 +19,7 @@ app.use(express.static('node_modules'));
 app.get('/', function (req, res) {
 	// 
   console.log(__dirname);
-	res.sendFile("index.html");
+	res.sendFile("/index.html");
 });
 
 app.get('/beers', function (req, res) {
